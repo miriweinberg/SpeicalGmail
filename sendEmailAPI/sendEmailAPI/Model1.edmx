@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="symbolsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Catagory_tbl">
+          <Key>
+            <PropertyRef Name="CatagoryCode" />
+          </Key>
+          <Property Name="CatagoryCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CatagoryName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contacts_tbl">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="First Name" Type="varchar" MaxLength="50" />
+          <Property Name="Last Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="E-Mail" Type="varchar" MaxLength="50" />
+          <Property Name="Image" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Message_tbl">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReceiveId" Type="int" Nullable="false" />
+          <Property Name="SenderId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Text" Type="varchar(max)" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="IsSucsses" Type="int" />
+        </EntityType>
+        <EntityType Name="Symbols_tbl">
+          <Key>
+            <PropertyRef Name="SymbolCode" />
+          </Key>
+          <Property Name="SymbolCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="varchar(max)" Nullable="false" />
+          <Property Name="Word" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SymbolsInCatagories_tbl">
+          <Key>
+            <PropertyRef Name="SymbolCode" />
+            <PropertyRef Name="CatagoryCode" />
+          </Key>
+          <Property Name="SymbolCode" Type="int" Nullable="false" />
+          <Property Name="CatagoryCode" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users_tbl">
+          <Key>
+            <PropertyRef Name="Password" />
+          </Key>
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="User Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="E-Mail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Image" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="fk">
+          <End Role="Contacts_tbl" Type="Self.Contacts_tbl" Multiplicity="1" />
+          <End Role="Message_tbl" Type="Self.Message_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts_tbl">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Message_tbl">
+              <PropertyRef Name="ReceiveId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk1">
+          <End Role="Symbols_tbl" Type="Self.Symbols_tbl" Multiplicity="1" />
+          <End Role="SymbolsInCatagories_tbl" Type="Self.SymbolsInCatagories_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Symbols_tbl">
+              <PropertyRef Name="SymbolCode" />
+            </Principal>
+            <Dependent Role="SymbolsInCatagories_tbl">
+              <PropertyRef Name="SymbolCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk2">
+          <End Role="Users_tbl" Type="Self.Users_tbl" Multiplicity="1" />
+          <End Role="Message_tbl" Type="Self.Message_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users_tbl">
+              <PropertyRef Name="Password" />
+            </Principal>
+            <Dependent Role="Message_tbl">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk3">
+          <End Role="Catagory_tbl" Type="Self.Catagory_tbl" Multiplicity="1" />
+          <End Role="SymbolsInCatagories_tbl" Type="Self.SymbolsInCatagories_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Catagory_tbl">
+              <PropertyRef Name="CatagoryCode" />
+            </Principal>
+            <Dependent Role="SymbolsInCatagories_tbl">
+              <PropertyRef Name="CatagoryCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="symbolsModelStoreContainer">
+          <EntitySet Name="Catagory_tbl" EntityType="Self.Catagory_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacts_tbl" EntityType="Self.Contacts_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message_tbl" EntityType="Self.Message_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Symbols_tbl" EntityType="Self.Symbols_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SymbolsInCatagories_tbl" EntityType="Self.SymbolsInCatagories_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users_tbl" EntityType="Self.Users_tbl" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk" Association="Self.fk">
+            <End Role="Contacts_tbl" EntitySet="Contacts_tbl" />
+            <End Role="Message_tbl" EntitySet="Message_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="fk1" Association="Self.fk1">
+            <End Role="Symbols_tbl" EntitySet="Symbols_tbl" />
+            <End Role="SymbolsInCatagories_tbl" EntitySet="SymbolsInCatagories_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="fk2" Association="Self.fk2">
+            <End Role="Users_tbl" EntitySet="Users_tbl" />
+            <End Role="Message_tbl" EntitySet="Message_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="fk3" Association="Self.fk3">
+            <End Role="Catagory_tbl" EntitySet="Catagory_tbl" />
+            <End Role="SymbolsInCatagories_tbl" EntitySet="SymbolsInCatagories_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="symbolsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Catagory_tbl">
+          <Key>
+            <PropertyRef Name="CatagoryCode" />
+          </Key>
+          <Property Name="CatagoryCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CatagoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Symbols_tbl" Relationship="Self.SymbolsInCatagories_tbl" FromRole="Catagory_tbl" ToRole="Symbols_tbl" />
+        </EntityType>
+        <EntityType Name="Contacts_tbl">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="E_Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Message_tbl" Relationship="Self.fk" FromRole="Contacts_tbl" ToRole="Message_tbl" />
+        </EntityType>
+        <EntityType Name="Message_tbl">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReceiveId" Type="Int32" Nullable="false" />
+          <Property Name="SenderId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="IsSucsses" Type="Int32" />
+          <NavigationProperty Name="Contacts_tbl" Relationship="Self.fk" FromRole="Message_tbl" ToRole="Contacts_tbl" />
+          <NavigationProperty Name="Users_tbl" Relationship="Self.fk2" FromRole="Message_tbl" ToRole="Users_tbl" />
+        </EntityType>
+        <EntityType Name="Symbols_tbl">
+          <Key>
+            <PropertyRef Name="SymbolCode" />
+          </Key>
+          <Property Name="SymbolCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Word" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Catagory_tbl" Relationship="Self.SymbolsInCatagories_tbl" FromRole="Symbols_tbl" ToRole="Catagory_tbl" />
+        </EntityType>
+        <EntityType Name="Users_tbl">
+          <Key>
+            <PropertyRef Name="Password" />
+          </Key>
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="E_Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Message_tbl" Relationship="Self.fk2" FromRole="Users_tbl" ToRole="Message_tbl" />
+        </EntityType>
+        <Association Name="fk">
+          <End Role="Contacts_tbl" Type="Self.Contacts_tbl" Multiplicity="1" />
+          <End Role="Message_tbl" Type="Self.Message_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts_tbl">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Message_tbl">
+              <PropertyRef Name="ReceiveId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk2">
+          <End Role="Users_tbl" Type="Self.Users_tbl" Multiplicity="1" />
+          <End Role="Message_tbl" Type="Self.Message_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users_tbl">
+              <PropertyRef Name="Password" />
+            </Principal>
+            <Dependent Role="Message_tbl">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SymbolsInCatagories_tbl">
+          <End Role="Symbols_tbl" Type="Self.Symbols_tbl" Multiplicity="*" />
+          <End Role="Catagory_tbl" Type="Self.Catagory_tbl" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="symbolsEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Catagory_tbl" EntityType="Self.Catagory_tbl" />
+          <EntitySet Name="Contacts_tbl" EntityType="Self.Contacts_tbl" />
+          <EntitySet Name="Message_tbl" EntityType="Self.Message_tbl" />
+          <EntitySet Name="Symbols_tbl" EntityType="Self.Symbols_tbl" />
+          <EntitySet Name="Users_tbl" EntityType="Self.Users_tbl" />
+          <AssociationSet Name="fk" Association="Self.fk">
+            <End Role="Contacts_tbl" EntitySet="Contacts_tbl" />
+            <End Role="Message_tbl" EntitySet="Message_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="fk2" Association="Self.fk2">
+            <End Role="Users_tbl" EntitySet="Users_tbl" />
+            <End Role="Message_tbl" EntitySet="Message_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="SymbolsInCatagories_tbl" Association="Self.SymbolsInCatagories_tbl">
+            <End Role="Symbols_tbl" EntitySet="Symbols_tbl" />
+            <End Role="Catagory_tbl" EntitySet="Catagory_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="symbolsModelStoreContainer" CdmEntityContainer="symbolsEntities1">
+          <EntitySetMapping Name="Catagory_tbl">
+            <EntityTypeMapping TypeName="symbolsModel.Catagory_tbl">
+              <MappingFragment StoreEntitySet="Catagory_tbl">
+                <ScalarProperty Name="CatagoryCode" ColumnName="CatagoryCode" />
+                <ScalarProperty Name="CatagoryName" ColumnName="CatagoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts_tbl">
+            <EntityTypeMapping TypeName="symbolsModel.Contacts_tbl">
+              <MappingFragment StoreEntitySet="Contacts_tbl">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="First_Name" ColumnName="First Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last Name" />
+                <ScalarProperty Name="E_Mail" ColumnName="E-Mail" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Message_tbl">
+            <EntityTypeMapping TypeName="symbolsModel.Message_tbl">
+              <MappingFragment StoreEntitySet="Message_tbl">
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="ReceiveId" ColumnName="ReceiveId" />
+                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="IsSucsses" ColumnName="IsSucsses" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Symbols_tbl">
+            <EntityTypeMapping TypeName="symbolsModel.Symbols_tbl">
+              <MappingFragment StoreEntitySet="Symbols_tbl">
+                <ScalarProperty Name="SymbolCode" ColumnName="SymbolCode" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Word" ColumnName="Word" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users_tbl">
+            <EntityTypeMapping TypeName="symbolsModel.Users_tbl">
+              <MappingFragment StoreEntitySet="Users_tbl">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="User_Name" ColumnName="User Name" />
+                <ScalarProperty Name="E_Mail" ColumnName="E-Mail" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="SymbolsInCatagories_tbl" TypeName="symbolsModel.SymbolsInCatagories_tbl" StoreEntitySet="SymbolsInCatagories_tbl">
+            <EndProperty Name="Symbols_tbl">
+              <ScalarProperty Name="SymbolCode" ColumnName="SymbolCode" />
+            </EndProperty>
+            <EndProperty Name="Catagory_tbl">
+              <ScalarProperty Name="CatagoryCode" ColumnName="CatagoryCode" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

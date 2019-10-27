@@ -1,0 +1,4 @@
+<button (click)="changeToSymbols()"> הגדרות סמלים</button>
+<button (click)="changeToContacts()">הגדרות אנשי קשר</button>
+<app-symbol-setting *ngIf="settings==true"></app-symbol-setting>
+<app-contacts-setting *ngIf="settings==false"></app-contacts-setting>

@@ -1,0 +1,16 @@
+.filepicker{
+    -webkit-appearance: none;
+    position:absolute;
+    top:1px;
+    right:1px;
+    width: 40px;
+    height: 40px;
+    text-indent: 100em;
+    background-size: cover;
+    overflow: hidden;
+    cursor: pointer;
+    outline: none;
+}
+form{
+    margin-right: 25% !important;
+}

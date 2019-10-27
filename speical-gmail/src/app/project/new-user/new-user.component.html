@@ -1,0 +1,48 @@
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
+<div>
+<div *ngFor="let con of users">
+    {{con.E-Mail}}
+</div>
+</div>
+<body dir="rtl" class="center-data">
+    <h1>יצירת חשבון Speical Mail </h1>
+    <form dir="rtl" class="form-inline">
+        <p>
+            <input type="text" placeholder="שם פרטי" name="firstName" class="form-control"
+                [(ngModel)]="user.firstName">&nbsp;&nbsp;
+            <input type="text" placeholder="שם משפחה" name="lastName" class="form-control"
+                [(ngModel)]="user.lastName"><br>
+            <span style="color: red" id="spanFName" hidden="hidden"><span
+                    class="glyphicon glyphicon-exclamation-sign"></span>
+                הזן שם פרטי</span>&nbsp;&nbsp;
+            <span style="color: red" id="spanLName" hidden="hidden"><span
+                    class="glyphicon glyphicon-exclamation-sign"></span>הזן שם משפחה</span><br>
+            <br>
+            <input type="text" id="uName" (focus)="changeUName()" placeholder="שם משתמש" [(ngModel)]="user.userName"
+                name="userName" class="form-control">
+            <label id="lblUname">מותר להשתמש באותיות, במספרים ובנקודות</label>
+            <br>
+            <input type="{{inputType}}" placeholder="סיסמה" name="password" class="form-control"
+                [(ngModel)]="user.password">&nbsp;&nbsp;
+            <input type="{{inputType}}" placeholder="אימות סיסמה" name="confirmPassword" class="form-control"
+                [(ngModel)]="confirmPassword">&nbsp;
+
+            <span *ngIf="eyeOpen==true" class="glyphicon glyphicon-eye-open" name="eyeOpen" (click)="changeEye()"
+                style="font-size:18px"></span>
+            <span *ngIf="eyeClose==true" class="glyphicon glyphicon-eye-close" name="eyeClose" (click)="changeEye()"
+                style="font-size:18px"></span>
+            <label id="lblPass">יש להשתמש ב-8 תווים או יותר בשילוב של אותיות, ספרות וסימנים</label><br><br>
+            <!-- <span style="color:red;" *ngIf="message">{{message}}</span> -->
+            <input type="file" #file (change)="preview(file.files)" class="form-control" name="img" accept='image/*'
+                [(ngModel)]="user.img">
+            <img [src]="imgURL" height="80" *ngIf="imgURL"><br>
+            <span style="color: red" id="spanImg" hidden="hidden"><span
+                    class="glyphicon glyphicon-exclamation-sign"></span>ניתן לבחור קובץ בסיומת jpg או png בלבד</span>
+            <br>
+            <!-- <img src="assets\images\word.jpg" (change)="changeImg()"  id="img" width="25px"><br>  accept="image/x-png,image/gif,image/jpeg"-->
+            <!-- <button >check</button> -->
+            <button type="submit" (click)="validTest(file.files)" class="btn btn-primary">הבא</button>
+        </p>
+    </form>
+</body>
